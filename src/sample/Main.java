@@ -1,17 +1,13 @@
 package sample;
 
 import javafx.application.Application;
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class Main extends Application {
-
-    private Button button;
 
     public static void main(String[] args) {
         launch(args);
@@ -20,19 +16,27 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        primaryStage.setTitle("JavaFx Demo");
+        Scene scene, scene2;
 
-        button = new Button();
-        button.setText("Click Me!");
+        Button button = new Button("Go to scene 2");
+        Button button2  = new Button("Back to scene 1");
 
-        button.setOnAction(event ->  System.out.println("You Clicked!"));
+        Label label = new Label("This is scene 1");
+        Label label2 = new Label("This is scene 2");
 
-        StackPane layout = new StackPane();
-        layout.getChildren().add(button);
+        VBox layout = new VBox(20);
+        layout.getChildren().addAll(label, button);
+        VBox layout2 = new VBox(20);
+        layout2.getChildren().addAll(label2, button2);
 
-        Scene scene = new Scene(layout, 800, 600);
+        scene = new Scene(layout, 400, 200);
+        scene2 = new Scene(layout2, 400, 200);
+
+        button2.setOnAction(event -> primaryStage.setScene(scene));
+        button.setOnAction(event -> primaryStage.setScene(scene2));
+
         primaryStage.setScene(scene);
-
+        primaryStage.setTitle("Switch Scene");
         primaryStage.show();
     }
 
