@@ -20,12 +20,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        primaryStage.setTitle("JavaFx Demo");
+        primaryStage.setTitle("JavaFx BOX Demo");
 
         button = new Button();
         button.setText("Click Me!");
 
-        button.setOnAction(event ->  System.out.println("You Clicked!"));
+        button.setOnAction(event ->  Box.show("Alert Box", "This is Alert"));
 
         StackPane layout = new StackPane();
         layout.getChildren().add(button);
