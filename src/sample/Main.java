@@ -3,11 +3,12 @@ package sample;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+
+    Stage window;
 
     public static void main(String[] args) {
         launch(args);
@@ -16,28 +17,39 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Scene scene, scene2;
+        window = primaryStage;
 
-        Button button = new Button("Go to scene 2");
-        Button button2  = new Button("Back to scene 1");
+        Button b1 = new Button();
+        b1.setText("Close Window");
 
-        Label label = new Label("This is scene 1");
-        Label label2 = new Label("This is scene 2");
+        b1.setOnAction( event -> {
+            boolean answer = checkAnswer();
+            System.out.println(answer);
+            closeWindow(answer);
+        });
 
-        VBox layout = new VBox(20);
-        layout.getChildren().addAll(label, button);
-        VBox layout2 = new VBox(20);
-        layout2.getChildren().addAll(label2, button2);
+        window.setOnCloseRequest(event -> {
+            event.consume();
+            boolean answer = checkAnswer();
+            closeWindow(answer);
+        });
 
-        scene = new Scene(layout, 400, 200);
-        scene2 = new Scene(layout2, 400, 200);
+        StackPane layout = new StackPane();
+        layout.getChildren().add(b1);
+        Scene scene = new Scene(layout, 300, 300);
+        window.setScene(scene);
+        window.show();
 
-        button2.setOnAction(event -> primaryStage.setScene(scene));
-        button.setOnAction(event -> primaryStage.setScene(scene2));
+    }
 
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Switch Scene");
-        primaryStage.show();
+    private boolean checkAnswer() {
+        return Controller.show("Exit Window", "Are Yoy sure?");
+    }
+
+    private void closeWindow(boolean answer) {
+        if (answer) {
+            window.close();
+        }
     }
 
 }
